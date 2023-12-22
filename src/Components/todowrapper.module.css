@@ -1,0 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    font-family: 'Inconsolata', monospace;
+}
+
+body {
+    min-height: 100vh;
+
+}
+
+.wrapper {
+    padding: 20px;
+    width: fit-content;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 5%;
+    box-shadow: 0px 6px 10px 0px rgba(135,133,135,0.52);
+
+}
+
+
+.todo {
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+
+h1 {
+    font-weight: bold;
+    text-align: center;
+    font-size: 60px;
+}
+
+
+.todoInput {
+    padding: 5px;
+    margin-right: 10px;
+    font-size: 19px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.todoInput:is(:hover, :focus, :active) {
+    border-color: black;
+    outline: 1px none;
+    border-radius: 3px;
+}
+
+
+
+.addButton {
+    width: 70px;
+    padding: 5px;
+    font-size: 19px;
+}
+
+
+
