@@ -59,5 +59,32 @@ h1 {
     font-size: 19px;
 }
 
+.todoItemContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.todo {
+    display: flex;
+    align-items: center;
+    gap:.5rem
+}
+.icons {
+    transition: color 0.3s ease;
+}
+
+.icons:hover {
+    color: #f2f735; /* Hover olduğunda renk değiştir */
+}
+
+
+
+
+
+
+
 
 
