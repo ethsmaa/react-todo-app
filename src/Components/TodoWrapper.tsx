@@ -1,8 +1,8 @@
-import  {useState} from 'react';
+import {useState} from 'react';
 import {MdDelete, MdOutlineCheckBoxOutlineBlank, MdCheckBox} from 'react-icons/md';
 import {IconContext} from 'react-icons';
 import styles from './todowrapper.module.css';
-
+import 'animate.css';
 interface Todo {
     text: string;
     color: string;
@@ -21,7 +21,8 @@ function getRandomColor(): string {
 function TodoWrapper(): JSX.Element {
     const [allTodos, setAllTodos] = useState<Todo[]>([]);
     const [newItem, setNewItem] = useState<string>('');
-
+    const [showCompleted, setShowCompleted] = useState<boolean>(false);
+    const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
     const handleNewItem = (): void => {
         const newTodo: Todo = {
             text: newItem,
@@ -35,50 +36,73 @@ function TodoWrapper(): JSX.Element {
 
     const handleToggleCheck = (index: number): void => {
         const updatedTodos = [...allTodos];
+
         updatedTodos[index].checked = !updatedTodos[index].checked;
         setAllTodos(updatedTodos);
     };
 
     return (
         <div className={styles.wrapper}>
-            <h1> TODO </h1>
-
+            <h1 className="animate__animated animate__pulse">TODO</h1>
             <input
                 className={styles.todoInput}
                 type="text"
-                placeholder="Yeni öğe ekle"
+                placeholder="add new todo..."
                 value={newItem}
                 onChange={(e) => setNewItem(e.target.value)}
             />
 
-            <button className={styles.addButton} onClick={handleNewItem}>
-                Ekle
+            <button className={styles.Button} onClick={handleNewItem}>
+                add
             </button>
 
-            <div className={styles.todoList}>
-                {allTodos.map((todo, index) => (
-                    <IconContext.Provider
-                        value={{className: 'icons', size: '30', color: todo.color}}
-                        key={index}
-                    >
-                        <div
-                            className={styles.todoItemContainer}
-                            style={{
-                                backgroundColor: `${todo.color}30`,
-                                border: `1px solid ${todo.color}20`,
-                            }}
-                        >
-                            <div className={styles.todo} onClick={() => handleToggleCheck(index)}>
-                                {todo.checked ? <MdCheckBox/> : <MdOutlineCheckBoxOutlineBlank/>}
-                                <h3>{todo.text}</h3>
-                            </div>
-                            <div>
-                                <MdDelete/>
-                            </div>
-                        </div>
-                    </IconContext.Provider>
-                ))}
+            <div className={styles.bottomBtn}>
+                <button
+                    className={`${styles.Button} ${showCompleted ? '' : styles.activeButton}`}
+                    onClick={() => setShowCompleted(false)}
+                >
+                    working on
+                </button>
+                <button
+                    className={`${styles.Button} ${showCompleted ? styles.activeButton : ''}`}
+                    onClick={() => setShowCompleted(true)}
+                >
+                    completed
+                </button>
             </div>
+
+
+            <div className={styles.todoList}>
+
+                {
+                    !showCompleted &&
+                    allTodos.map((todo, index) => (
+                        <IconContext.Provider
+                            value={{className: 'icons', size: '30', color: todo.color}}
+                            key={index}
+                        >
+                            <div
+                                className={`${styles.todoItemContainer} ${hoveredIndex === index ? 'animate__animated animate__pulse' : ''}`}
+                                style={{
+                                    backgroundColor: `${todo.color}30`,
+                                    border: `1px solid ${todo.color}20`,
+                                }}
+                                onMouseEnter={() => setHoveredIndex(index)}
+                                onMouseLeave={() => setHoveredIndex(null)}
+                            >
+                                <div className={styles.todo} onClick={() => handleToggleCheck(index)}>
+                                    {todo.checked ? <MdCheckBox/> : <MdOutlineCheckBoxOutlineBlank/>}
+                                    <h3>{todo.text}</h3>
+                                </div>
+                                <div>
+                                    <MdDelete/>
+                                </div>
+                            </div>
+                        </IconContext.Provider>
+                    ))}
+            </div>
+
+
         </div>
     );
 }

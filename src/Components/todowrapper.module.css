@@ -53,9 +53,8 @@ h1 {
 
 
 
-.addButton {
-    width: 70px;
-    padding: 5px;
+.Button {
+    padding: 5px 20px;
     font-size: 19px;
 }
 
@@ -72,16 +71,20 @@ h1 {
     align-items: center;
     gap:.5rem
 }
-.icons {
-    transition: color 0.3s ease;
+
+
+.bottomBtn{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
 }
 
-.icons:hover {
-    color: #f2f735; /* Hover olduğunda renk değiştir */
+
+.activeButton {
+    background-color: black;
+    color: white;
+    transition: .2s;
 }
-
-
-
 
 
 
