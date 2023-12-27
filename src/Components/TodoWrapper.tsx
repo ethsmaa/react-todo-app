@@ -24,6 +24,10 @@ function TodoWrapper(): JSX.Element {
     const [showCompleted, setShowCompleted] = useState<boolean>(false);
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
     const handleNewItem = (): void => {
+
+        if (!newItem.trim()) {
+            return;
+        }
         const newTodo: Todo = {
             text: newItem,
             color: getRandomColor(),
@@ -39,7 +43,23 @@ function TodoWrapper(): JSX.Element {
 
         updatedTodos[index].checked = !updatedTodos[index].checked;
         setAllTodos(updatedTodos);
+
+        if (updatedTodos[index].checked) {
+            setTimeout(() => {
+                const filteredTodos = allTodos.filter((todo, i) => i !== index);
+                setAllTodos(filteredTodos);
+            }, 500);
+        }
+
     };
+
+
+    const handleDelete = (index: number): void => {
+        const updatedTodos = [...allTodos];
+        updatedTodos.splice(index, 1);
+        setAllTodos(updatedTodos);
+        console.log(allTodos);
+    }
 
     return (
         <div className={styles.wrapper}>
@@ -75,6 +95,7 @@ function TodoWrapper(): JSX.Element {
             <div className={styles.todoList}>
 
                 {
+
                     !showCompleted &&
                     allTodos.map((todo, index) => (
                         <IconContext.Provider
@@ -91,11 +112,11 @@ function TodoWrapper(): JSX.Element {
                                 onMouseLeave={() => setHoveredIndex(null)}
                             >
                                 <div className={styles.todo} onClick={() => handleToggleCheck(index)}>
-                                    {todo.checked ? <MdCheckBox/> : <MdOutlineCheckBoxOutlineBlank/>}
+                                    {todo.checked ? <MdCheckBox/> : <MdOutlineCheckBoxOutlineBlank />}
                                     <h3>{todo.text}</h3>
                                 </div>
                                 <div>
-                                    <MdDelete/>
+                                    <MdDelete onClick={() => handleDelete(index)}/>
                                 </div>
                             </div>
                         </IconContext.Provider>
