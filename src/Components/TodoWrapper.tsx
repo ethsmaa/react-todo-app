@@ -46,7 +46,7 @@ function TodoWrapper(): JSX.Element {
 
         if (updatedTodos[index].checked) {
             setTimeout(() => {
-                const filteredTodos = allTodos.filter((todo, i) => i !== index);
+                const filteredTodos = allTodos.filter((_, i) => i !== index);
                 setAllTodos(filteredTodos);
             }, 500);
         }
